@@ -1,0 +1,58 @@
+assignment=# \d certified
+                              Table "public.certified"
+ Column |  Type   | Collation | Nullable |                  Default                  
+--------+---------+-----------+----------+-------------------------------------------
+ emp_id | bigint  |           | not null | nextval('certified_emp_id_seq'::regclass)
+ a_id   | integer |           |          | 
+Foreign-key constraints:
+    "certified_a_id_fkey" FOREIGN KEY (a_id) REFERENCES aircraft(a_id)
+    "certified_emp_id_fkey" FOREIGN KEY (emp_id) REFERENCES emp(id)
+
+
+
+assignment=# \d emp;
+                                     Table "public.emp"
+   Column   |         Type          | Collation | Nullable |             Default             
+------------+-----------------------+-----------+----------+---------------------------------
+ id         | bigint                |           | not null | nextval('emp_id_seq'::regclass)
+ first_name | character varying(50) |           |          | 
+ last_name  | character varying(20) |           |          | 
+ gender     | character varying(10) |           |          | 
+ salary     | integer               |           |          | 
+ job        | character varying(50) |           |          | 
+Indexes:
+    "emp_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "certified" CONSTRAINT "certified_emp_id_fkey" FOREIGN KEY (emp_id) REFERENCES emp(id)
+
+
+
+assignment=# \d aircraft
+                        Table "public.aircraft"
+    Column     |         Type          | Collation | Nullable | Default 
+---------------+-----------------------+-----------+----------+---------
+ a_id          | integer               |           | not null | 
+ a_name        | character varying(50) |           |          | 
+ cruisingrange | integer               |           |          | 
+Indexes:
+    "aircraft_pkey" PRIMARY KEY, btree (a_id)
+Referenced by:
+    TABLE "certified" CONSTRAINT "certified_a_id_fkey" FOREIGN KEY (a_id) REFERENCES aircraft(a_id)
+
+
+
+assignment=# \d flight
+                        Table "public.flight"
+   Column   |          Type          | Collation | Nullable | Default 
+------------+------------------------+-----------+----------+---------
+ fl_no      | integer                |           | not null | 
+ start_from | text                   |           |          | 
+ land_to    | text                   |           |          | 
+ distance   | bigint                 |           |          | 
+ dep_time   | time without time zone |           |          | 
+ arival     | time without time zone |           |          | 
+ price      | bigint                 |           |          | 
+Indexes:
+    "flight_pkey" PRIMARY KEY, btree (fl_no)
+
+
